@@ -123,6 +123,7 @@ function renderList(){
     // ul.appendChild(li);
     // li.textContent = `${arrayofProducts[i].name} had ${arrayofProducts[i].votes} Votes and was seen ${arrayofProducts[i].seen} times `;
   }
+  button1.removeEventListener('click',renderList);
   let ctx = document.getElementById('myChart').getContext('2d');
   let myChart = new Chart(ctx, {
     type: 'bar',
