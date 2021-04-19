@@ -1,0 +1,32 @@
+*{
+  box-sizing: border-box;
+}
+
+h2{
+  text-align: center;
+  color: chocolate;
+}
+body{
+  background-color: beige;
+}
+
+ul{
+  display: inline-block;
+  width: 100%;
+  background-color: cornsilk;
+}
+
+li{
+  font-size: 30px;
+  font-weight: bold;
+  list-style: none;
+  color: red;
+  text-align: left;
+  margin-bottom: 10px;
+}
+img {
+  width: 250px;
+  height: 250px;
+  margin: 25px;
+  cursor: pointer;
+}
