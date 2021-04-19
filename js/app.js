@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 'use strict';
 
 let leftImg = document.getElementById('left-image');
@@ -9,6 +11,7 @@ let rightIndex;
 let counter = 0;
 let maxAttempts = 25;
 let arrayofProducts = [];
+let arrayofNames = [];
 let button1 = document.getElementById('Results');
 
 function Products(name,source){
@@ -18,6 +21,7 @@ function Products(name,source){
   this.seen = 0;
   this.shown = false;
   arrayofProducts.push(this);
+  arrayofNames.push(this.name);
 }
 
 
@@ -49,19 +53,17 @@ function renderImgs(){
   leftIndex = generateRandomIndex();
   middleIndex = generateRandomIndex();
   rightIndex = generateRandomIndex();
+  while(arrayofProducts[leftIndex].shown===true)
+    leftIndex=generateRandomIndex();
+  while(middleIndex===leftIndex || arrayofProducts[middleIndex].shown===true){
+    middleIndex=generateRandomIndex();
+  }
+  while(rightIndex===middleIndex || rightIndex === leftIndex || arrayofProducts[rightIndex].shown===true){
+    rightIndex=generateRandomIndex();
+  }
 
-  if(leftIndex === middleIndex || leftIndex === rightIndex)
-  {
-    leftIndex = generateRandomIndex();
-  }
-  else if (rightIndex === middleIndex || rightIndex === leftIndex)
-  {
-    rightIndex = generateRandomIndex();
-  }
-  else if (middleIndex === leftIndex || middleIndex === rightIndex)
-  {
-    middleIndex = generateRandomIndex();
-  }
+  for(let i = 0 ; i <arrayofProducts.length;i++)
+    arrayofProducts[i].shown=false;
 
   leftImg.src = arrayofProducts[leftIndex].source;
   middleImg.src = arrayofProducts[middleIndex].source;
@@ -98,9 +100,6 @@ function handleClicking(event){
     {
       arrayofProducts[rightIndex].votes++;
     }
-    arrayofProducts[leftIndex].shown=false;
-    arrayofProducts[middleIndex].shown=false;
-    arrayofProducts[rightIndex].shown=false;
     renderImgs();
   }
   else
@@ -112,11 +111,53 @@ function handleClicking(event){
   }
 }
 
+let arrOfVotes = [];
+let arrOfSeen = [];
+
 function renderList(){
   let ul = document.getElementById('List');
   for(let i = 0 ; i < arrayofProducts.length;i++){
-    let li = document.createElement('li');
-    ul.appendChild(li);
-    li.textContent = `${arrayofProducts[i].name} had ${arrayofProducts[i].votes} Votes and was seen ${arrayofProducts[i].seen} times `;
+    arrOfVotes.push(arrayofProducts[i].votes);
+    arrOfSeen.push(arrayofProducts[i].seen);
+    // let li = document.createElement('li');
+    // ul.appendChild(li);
+    // li.textContent = `${arrayofProducts[i].name} had ${arrayofProducts[i].votes} Votes and was seen ${arrayofProducts[i].seen} times `;
   }
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: arrayofNames,
+      datasets: [{
+        label: '# of Votes',
+        data: arrOfVotes,
+        backgroundColor: [
+          'red',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1
+      },{
+        label:'# of Seen',
+        data:arrOfSeen,
+        backgroundColor: [
+          'blue',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1
+      }]
+    },
+    // options: {
+    //   scales: {
+    //     y: {
+    //       beginAtZero: true
+    //     }
+    //   }
+    // }
+  });
 }
+
+
