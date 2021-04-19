@@ -49,19 +49,17 @@ function renderImgs(){
   leftIndex = generateRandomIndex();
   middleIndex = generateRandomIndex();
   rightIndex = generateRandomIndex();
+  while(arrayofProducts[leftIndex].shown===true)
+    leftIndex=generateRandomIndex();
+  while(middleIndex===leftIndex || arrayofProducts[middleIndex].shown===true){
+    middleIndex=generateRandomIndex();
+  }
+  while(rightIndex===middleIndex || rightIndex === leftIndex || arrayofProducts[rightIndex].shown===true){
+    rightIndex=generateRandomIndex();
+  }
 
-  if(leftIndex === middleIndex || leftIndex === rightIndex)
-  {
-    leftIndex = generateRandomIndex();
-  }
-  else if (rightIndex === middleIndex || rightIndex === leftIndex)
-  {
-    rightIndex = generateRandomIndex();
-  }
-  else if (middleIndex === leftIndex || middleIndex === rightIndex)
-  {
-    middleIndex = generateRandomIndex();
-  }
+  for(let i = 0 ; i <arrayofProducts.length;i++)
+    arrayofProducts[i].shown=false;
 
   leftImg.src = arrayofProducts[leftIndex].source;
   middleImg.src = arrayofProducts[middleIndex].source;
@@ -98,9 +96,6 @@ function handleClicking(event){
     {
       arrayofProducts[rightIndex].votes++;
     }
-    arrayofProducts[leftIndex].shown=false;
-    arrayofProducts[middleIndex].shown=false;
-    arrayofProducts[rightIndex].shown=false;
     renderImgs();
   }
   else
@@ -120,3 +115,4 @@ function renderList(){
     li.textContent = `${arrayofProducts[i].name} had ${arrayofProducts[i].votes} Votes and was seen ${arrayofProducts[i].seen} times `;
   }
 }
+
