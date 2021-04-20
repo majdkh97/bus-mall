@@ -119,9 +119,9 @@ function renderList(){
   for(let i = 0 ; i < arrayofProducts.length;i++){
     arrOfVotes.push(arrayofProducts[i].votes);
     arrOfSeen.push(arrayofProducts[i].seen);
-    // let li = document.createElement('li');
-    // ul.appendChild(li);
-    // li.textContent = `${arrayofProducts[i].name} had ${arrayofProducts[i].votes} Votes and was seen ${arrayofProducts[i].seen} times `;
+    let li = document.createElement('li');
+    ul.appendChild(li);
+    li.textContent = `${arrayofProducts[i].name} had ${arrayofProducts[i].votes} Votes and was seen ${arrayofProducts[i].seen} times `;
   }
   button1.removeEventListener('click',renderList);
   let ctx = document.getElementById('myChart').getContext('2d');
